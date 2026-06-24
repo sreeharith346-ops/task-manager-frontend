@@ -1,10 +1,21 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 
 export default function Navbar() {
-  const { user } = useContext(AuthContext);
+  const {
+    user,
+    logout,
+    isAuthenticated,
+  } = useContext(AuthContext);
+
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   const linkStyle = (path) => ({
     color: "white",
@@ -28,6 +39,8 @@ export default function Navbar() {
           "linear-gradient(90deg,#4f46e5,#7c3aed)",
         color: "white",
         boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
+        flexWrap: "wrap",
+        gap: "10px",
       }}
     >
       <h2 style={{ margin: 0 }}>
@@ -39,31 +52,47 @@ export default function Navbar() {
           display: "flex",
           gap: "10px",
           alignItems: "center",
+          flexWrap: "wrap",
         }}
       >
-        <Link
-          to="/dashboard"
-          style={linkStyle("/dashboard")}
-        >
-          Dashboard
-        </Link>
-
-        <Link
-          to="/tasks"
-          style={linkStyle("/tasks")}
-        >
-          Tasks
-        </Link>
-
-        <Link
-          to="/profile"
-          style={linkStyle("/profile")}
-        >
-          Profile
-        </Link>
-
-        {user && (
+        {!isAuthenticated && (
           <>
+            <Link to="/" style={linkStyle("/")}>
+              Login
+            </Link>
+
+            <Link
+              to="/register"
+              style={linkStyle("/register")}
+            >
+              Register
+            </Link>
+          </>
+        )}
+
+        {isAuthenticated && (
+          <>
+            <Link
+              to="/dashboard"
+              style={linkStyle("/dashboard")}
+            >
+              Dashboard
+            </Link>
+
+            <Link
+              to="/tasks"
+              style={linkStyle("/tasks")}
+            >
+              Tasks
+            </Link>
+
+            <Link
+              to="/profile"
+              style={linkStyle("/profile")}
+            >
+              Profile
+            </Link>
+
             <div
               style={{
                 width: "35px",
@@ -77,14 +106,14 @@ export default function Navbar() {
                 fontWeight: "bold",
               }}
             >
-              {user.name
-                ?.charAt(0)
-                .toUpperCase()}
+              {user?.name?.charAt(0).toUpperCase() || "U"}
             </div>
 
-            <span>
-              {user.name}
-            </span>
+            <span>{user?.name}</span>
+
+            <button onClick={handleLogout}>
+              Logout
+            </button>
           </>
         )}
       </div>
