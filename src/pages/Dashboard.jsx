@@ -186,7 +186,7 @@ const chartData = {
               "0 5px 15px rgba(0,0,0,0.15)",
           }}
         >
-          <h3>🔥 High Priority Tasks</h3>
+          <h3> High Priority Tasks</h3>
           <h1>{highPriorityTasks}</h1>
         </div>
 
@@ -201,7 +201,7 @@ const chartData = {
               "0 5px 15px rgba(0,0,0,0.15)",
           }}
         >
-          <h3>📋 Pending Tasks</h3>
+          <h3>Pending Tasks</h3>
           <h1>{pendingTasks}</h1>
         </div>
       </div>
@@ -266,7 +266,7 @@ const chartData = {
       "0 5px 15px rgba(0,0,0,0.15)",
   }}
 >
-  <h3>📊 Completion Rate</h3>
+  <h3>Completion Rate</h3>
   <h1>{completionPercentage}%</h1>
 </div>
 <div
